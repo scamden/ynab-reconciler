@@ -22,6 +22,7 @@ jobs:
     steps:
       - checkout
       - run: *set_global_npm_permissions
+      - run: *configure_cache
       - restore_cache: *restore_cache
       - run:
           name: Update npm
@@ -38,6 +39,7 @@ jobs:
       - run:
           name: Run tests
           command: npm test
+      - run: *configure_cache
       - save_cache:
           key: v2-dep-{{ .Branch }}-{{ epoch }}
           paths:
@@ -48,6 +50,7 @@ jobs:
     steps:
       - checkout
       - run: *set_global_npm_permissions
+      - run: *configure_cache
       - restore_cache: *restore_cache
       - run:
           name: Deploy

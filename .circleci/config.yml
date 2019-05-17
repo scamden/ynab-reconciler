@@ -9,11 +9,12 @@ references:
   - &set_global_npm_permissions
       name: Set global npm permissions
       command: sudo chown -R $(whoami):$(id -g) /usr/local
+  - &configure_cache echo "${CACHE_VERSION:-3}" > ~/CACHE_VERSION.txt
   - &restore_cache
       keys:
-        - v2-dep-{{ .Branch }}-
-        - v2-dep-master-
-        - v2-dep-
+        - v{{ checksum "~/CACHE_VERSION.txt" }}-dep-{{ .Branch }}-
+        - v{{ checksum "~/CACHE_VERSION.txt" }}-dep-master-
+        - v{{ checksum "~/CACHE_VERSION.txt" }}-dep-
 
 jobs:
   build:
@@ -41,7 +42,6 @@ jobs:
           key: v2-dep-{{ .Branch }}-{{ epoch }}
           paths:
             - node_modules
-            - /usr/local/lib/node_modules # global dependencies
 
   deploy:
     <<: *container_config
@@ -51,7 +51,7 @@ jobs:
       - restore_cache: *restore_cache
       - run:
           name: Deploy
-          command: echo Deploy Command Placeholder      
+          command: echo Deploy Command Placeholder
 
   automerge:
     <<: *container_config
@@ -66,7 +66,7 @@ jobs:
             git checkout $CIRCLE_BRANCH
             git stash pop || true
             git fetch origin dev:dev
-            git fetch . $CIRCLE_BRANCH:dev  
+            git fetch . $CIRCLE_BRANCH:dev
             git push origin dev
 
 workflows:

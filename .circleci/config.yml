@@ -5,15 +5,15 @@ references:
   - &container_config
       working_directory: *working_directory
       docker:
-        - image: circleci/node:6.10.3
+        - image: circleci/node:10.15.3
   - &set_global_npm_permissions
       name: Set global npm permissions
       command: sudo chown -R $(whoami):$(id -g) /usr/local
   - &restore_cache
       keys:
-        - v1-dep-{{ .Branch }}-
-        - v1-dep-master-
-        - v1-dep-
+        - v2-dep-{{ .Branch }}-
+        - v2-dep-master-
+        - v2-dep-
 
 jobs:
   build:
@@ -25,9 +25,9 @@ jobs:
       - run:
           name: Update npm
           command: >
-            npm -v | grep ^5 &&
+            npm -v | grep ^6 &&
             echo npm is ready ||
-            (npm i -g npm3 && npm3 -g uninstall npm && npm3 i -g npm@5)
+            (npm i -g npm@6)
       - run:
           name: Install dependencies
           command: |
@@ -38,7 +38,7 @@ jobs:
           name: Run tests
           command: npm test
       - save_cache:
-          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          key: v2-dep-{{ .Branch }}-{{ epoch }}
           paths:
             - node_modules
             - /usr/local/lib/node_modules # global dependencies

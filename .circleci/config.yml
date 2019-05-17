@@ -41,7 +41,7 @@ jobs:
           command: npm test
       - run: *configure_cache
       - save_cache:
-          key: v2-dep-{{ .Branch }}-{{ epoch }}
+          key: v{{ checksum "~/CACHE_VERSION.txt" }}-dep-{{ .Branch }}-{{ epoch }}
           paths:
             - node_modules
 

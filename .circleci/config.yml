@@ -9,12 +9,12 @@ references:
   - &set_global_npm_permissions
       name: Set global npm permissions
       command: sudo chown -R $(whoami):$(id -g) /usr/local
-  - &configure_cache echo "${CACHE_VERSION:-3}" > ~/CACHE_VERSION.txt
+  - &configure_cache node --version > ~/node-version.txt
   - &restore_cache
       keys:
-        - v1-{{ checksum "~/CACHE_VERSION.txt" }}-dep-{{ .Branch }}-
-        - v1-{{ checksum "~/CACHE_VERSION.txt" }}-dep-master-
-        - v1-{{ checksum "~/CACHE_VERSION.txt" }}-dep-
+        - v1-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-{{ .Branch }}-
+        - v1-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-master-
+        - v1-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
           command: npm test
       - run: *configure_cache
       - save_cache:
-          key: v1-{{ checksum "~/CACHE_VERSION.txt" }}-dep-{{ .Branch }}-{{ epoch }}
+          key: v1-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-{{ .Branch }}-{{ epoch }}
           paths:
             - node_modules
 

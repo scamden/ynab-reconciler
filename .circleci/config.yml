@@ -5,7 +5,7 @@ references:
   - &container_config
       working_directory: *working_directory
       docker:
-        - image: circleci/node10.15.3
+        - image: circleci/node:10.15.3
   - &set_global_npm_permissions
       name: Set global npm permissions
       command: sudo chown -R $(whoami):$(id -g) /usr/local

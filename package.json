@@ -44,7 +44,7 @@
     "tap-spec": "^4.1.1",
     "transform-ts-paths": "^1.0.0",
     "ts-jest": "^23.10.5",
-    "tslint": "^5.4.2",
+    "tslint": "^5.16.0",
     "typescript": "^3.0.1",
     "validate-commit-msg": "^2.14.0",
     "watch": "^1.0.2"

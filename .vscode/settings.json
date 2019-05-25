@@ -3,6 +3,9 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  },
   "search.exclude": {
     "**/.git": true,
     "**/.awcache": true,

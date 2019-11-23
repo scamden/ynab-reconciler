@@ -8,7 +8,7 @@
     "preversion": "ciq get && npm run test",
     "postpublish": "ciq push",
     "clean": "rm -rf dist",
-    "precompile": "npm run clean",
+    "precompile": "npm run clean && sed -i '' 's|: readonly|:|g' node_modules/typescript/lib/lib.es2015.promise.d.ts",
     "justCompile": "node_modules/.bin/tsc -p .",
     "compile": "npm run justCompile",
     "compile:watch": "node_modules/.bin/watch --filter=watch-filter.js 'npm run justCompile' src",
@@ -37,7 +37,7 @@
     "transform-ts-paths": "^1.0.0",
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",
-    "typescript": "^3.0.1",
+    "typescript": "^3.7.2",
     "validate-commit-msg": "^2.14.0",
     "watch": "^1.0.2"
   },

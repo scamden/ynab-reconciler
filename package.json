@@ -1,6 +1,6 @@
 {
   "name": "@creditiq/base",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "scripts": {
     "postinstall": "! pwd | grep -q node_modules && patch-package",

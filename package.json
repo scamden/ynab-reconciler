@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "main": "dist/index.js",
   "scripts": {
-    "postinstall": "patch-package",
+    "postinstall": "! pwd | grep -q node_modules && patch-package",
     "precommit": "ciq package check-file-links",
     "commitmsg": "validate-commit-msg",
     "preversion": "ciq get && npm run test",

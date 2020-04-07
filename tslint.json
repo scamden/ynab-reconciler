@@ -22,24 +22,33 @@
       "spaces",
       2
     ],
-    "interface-name": [true, "always-prefix"],
+    "interface-name": [
+      true,
+      "always-prefix"
+    ],
     "interface-over-type-literal": false,
     "jsdoc-format": false,
-    "jsx-no-multiline-js": false, // maybe turn this on when we have more time to fix it
+    "jsx-no-multiline-js": false,
     "label-position": true,
     "max-line-length": [
       true,
       140
     ],
     "member-access": false,
-    "member-ordering": [true, {
-      "order": "statics-first"
-    }],
+    "member-ordering": [
+      true,
+      {
+        "order": "statics-first"
+      }
+    ],
     "no-any": false,
     "no-arg": true,
     "no-bitwise": true,
     "no-conditional-assignment": true,
-    "no-consecutive-blank-lines": [true, 1],
+    "no-consecutive-blank-lines": [
+      true,
+      1
+    ],
     "no-console": [
       true,
       "debug",
@@ -52,8 +61,12 @@
     "no-empty": true,
     "no-empty-interface": false,
     "no-eval": true,
-    "no-implicit-dependencies": [false],
-    "no-inferrable-types": [false],
+    "no-implicit-dependencies": [
+      false
+    ],
+    "no-inferrable-types": [
+      false
+    ],
     "no-internal-module": true,
     "no-null-keyword": false,
     "no-object-literal-type-assertion": false,
@@ -65,14 +78,20 @@
     "no-unused-expression": true,
     "no-duplicate-imports": false,
     "no-submodule-imports": false,
-    "no-unused-variable": [true, {
-      "ignore-pattern": "^_"
-    }],
+    "no-unused-variable": [
+      true,
+      {
+        "ignore-pattern": "^_"
+      }
+    ],
     "no-use-before-declare": false,
     "no-var-keyword": true,
     "no-var-requires": false,
     "object-literal-sort-keys": false,
-    "object-literal-key-quotes": [true, "as-needed"],
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
     "one-line": [
       true,
       "check-open-brace",
@@ -80,7 +99,10 @@
       "check-else",
       "check-whitespace"
     ],
-    "ordered-imports": [true, "case-insensitive"],
+    "ordered-imports": [
+      true,
+      "case-insensitive"
+    ],
     "quotemark": [
       true,
       "single",
@@ -88,15 +110,21 @@
       "avoid-escape"
     ],
     "radix": true,
-    "semicolon": [true, "always"],
-    // "sort-imports": true, //NO this is the worst
-    "space-before-function-paren": [true, {
-      "anonymous": "always"
-    }],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "space-before-function-paren": [
+      true,
+      {
+        "anonymous": "always"
+      }
+    ],
     "space-within-parens": false,
     "switch-default": false,
     "trailing-comma": [
-      false, {
+      false,
+      {
         "multiline": "always",
         "singleline": "never"
       }
@@ -113,7 +141,8 @@
       "member-variable-declaration"
     ],
     "typedef-whitespace": [
-      true, {
+      true,
+      {
         "index-signature": "nospace",
         "parameter": "nospace",
         "property-declaration": "nospace",
@@ -137,6 +166,10 @@
       "check-operator",
       "check-separator",
       "check-type"
+    ],
+    "array-type": [
+      true,
+      "array-simple"
     ]
   }
 }

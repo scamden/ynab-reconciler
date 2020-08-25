@@ -27,9 +27,9 @@ jobs:
       - run:
           name: Update npm
           command: >
-            npm -v | grep ^6 &&
+            npm -v | grep ^7 &&
             echo npm is ready ||
-            (npm i -g npm@6)
+            (npm i -g npm@next-7)
       - run:
           name: Install dependencies
           command: |

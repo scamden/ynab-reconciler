@@ -12,9 +12,9 @@ references:
   - &configure_cache node --version > ~/node-version.txt
   - &restore_cache
       keys:
-        - v1-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-{{ .Branch }}-
-        - v1-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-master-
-        - v1-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-
+        - v2-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-{{ .Branch }}-
+        - v2-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-master-
+        - v2-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
           command: npm test
       - run: *configure_cache
       - save_cache:
-          key: v1-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-{{ .Branch }}-{{ epoch }}
+          key: v2-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-{{ .Branch }}-{{ epoch }}
           paths:
             - node_modules
 

@@ -39,7 +39,6 @@ jobs:
       - run:
           name: Run tests
           command: npm test
-      - run: *configure_cache
       - save_cache:
           key: v3-{{ .Environment.CACHE_VERSION }}-dep-{{ arch }}-{{ checksum "~/node-version.txt" }}-{{ .Branch }}-{{ epoch }}
           paths:

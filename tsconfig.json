@@ -8,6 +8,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
+    "declarationMap": true,
     "noImplicitAny": true,
     "removeComments": true,
     "inlineSourceMap": true,

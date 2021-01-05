@@ -140,9 +140,9 @@ export function getBankTransactions(parsedCsv: BankRow[]): Transaction[] {
     date: dayjs(date),
     payee: Description,
     source: 'Bank',
-    amount: Amount && getNumberFromDollarString(Amount) ||
-      Debit && -1 * getNumberFromDollarString(Debit) ||
-      getNumberFromDollarString(Credit)
+    amount: Amount && getNumberFromDollarString(Amount || '') ||
+      Debit && -1 * getNumberFromDollarString(Debit || '') ||
+      getNumberFromDollarString(Credit || '')
   }));
 }
 

@@ -107,7 +107,7 @@ module.exports = {
         }
       }
     ],
-    "@typescript-eslint/member-ordering": "warn",
+    "@typescript-eslint/member-ordering": "off",
     "@typescript-eslint/naming-convention": [
       "warn",
       {
@@ -283,7 +283,8 @@ module.exports = {
     "no-return-assign": "warn",
     "no-return-await": "warn",
     "no-sequences": "warn",
-    "no-shadow": [
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": [
       "warn",
       {
         "hoist": "all"
@@ -328,8 +329,9 @@ module.exports = {
       "never"
     ],
     "react/jsx-key": "warn",
-    "react/jsx-no-bind": "warn",
+    "react/jsx-no-bind": "off",
     "react/jsx-wrap-multilines": "warn",
+    "react/prop-types": "off",
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "sort-imports": [
@@ -371,13 +373,13 @@ module.exports = {
         "rules": {
           "import-spacing": true,
           "jsx-alignment": true,
-          "jsx-no-lambda": true,
+          "jsx-no-lambda": false,
           "jsx-no-string-ref": true,
           "jsx-self-close": true,
           "no-promise-as-boolean": true,
           "prefer-conditional-expression": true,
           "typedef": [
-            true,
+            false,
             "parameter",
             "property-declaration",
             "member-variable-declaration"

@@ -19,18 +19,15 @@ export async function reconcile(ynabCsvPath: string, bankCsvPathString: string, 
     findInYnabNotInBank: false,
     logYnabTransactionForAccount: false,
     earliestDate: dayjs().subtract(1, 'year').format(),
-    ...opts
+    ...opts,
   };
   const { findInYnabNotInBank, earliestDate, logYnabTransactionForAccount } = reconcileOpts;
   const earliestDateDay = dayjs(earliestDate);
   const parsedBank = await parseCsvFile(bankCsvPathString);
-  const bankTrans = sortByDate(getBankTransactions(parsedBank))
-    .filter((tran) => !tran.date.isBefore(earliestDateDay))
-    ;
-
-  const ynabTrans = sortByDate(getYnabTransactions(await parseCsvFile(ynabCsvPath), accountName))
-    .filter((tran) => !tran.date.isBefore(earliestDateDay))
-    ;
+  const bankTrans = sortByDate(getBankTransactions(parsedBank)).filter((tran) => !tran.date.isBefore(earliestDateDay));
+  const ynabTrans = sortByDate(getYnabTransactions(await parseCsvFile(ynabCsvPath), accountName)).filter(
+    (tran) => !tran.date.isBefore(earliestDateDay)
+  );
   if (logYnabTransactionForAccount) {
     logTransactions(ynabTrans);
   }
@@ -67,18 +64,15 @@ export async function reconcile(ynabCsvPath: string, bankCsvPathString: string, 
       const longer = bank.length > ynab.length ? bank : ynab;
       const other = bank.length > ynab.length ? ynab : bank;
       const likelyMatches = other.map((otherTran) => {
-        const closestTran = longer.reduce((closest: Transaction | null, longerTran) =>
-          (
-            !closest ||
-            distanceBetweenDates(closest.date, otherTran.date) > distanceBetweenDates(longerTran.date, otherTran.date)
-          )
-            ?
-            longerTran :
-            closest
-          , null);
+        const closestTran = longer.reduce(
+          (closest: Transaction | null, longerTran) =>
+            !closest || distanceBetweenDates(closest.date, otherTran.date) > distanceBetweenDates(longerTran.date, otherTran.date)
+              ? longerTran
+              : closest,
+          null
+        );
         return [otherTran, closestTran!];
-      }
-      );
+      });
       console.log('Likely Matches:');
       likelyMatches.forEach((likelyMatch) => {
         console.log('');
@@ -86,8 +80,13 @@ export async function reconcile(ynabCsvPath: string, bankCsvPathString: string, 
       });
 
       console.log('\nProbable mismatches');
-      logTransactions(_.differenceBy(longer, likelyMatches.map((lm) => lm[1]), 'id'));
-
+      logTransactions(
+        _.differenceBy(
+          longer,
+          likelyMatches.map((lm) => lm[1]),
+          'id'
+        )
+      );
     });
   }
 }
@@ -109,30 +108,30 @@ export function logTransactions(trans: Transaction[]) {
 
 export type Transaction = {
   id: string;
-  date: dayjs.Dayjs,
-  payee: string,
+  date: dayjs.Dayjs;
+  payee: string;
   amount: number;
   source: 'Bank' | 'Ynab';
 };
 
 export type YnabRow = {
-  Date: string,
-  Payee: string,
-  Outflow: string,
-  Inflow: string,
+  Date: string;
+  Payee: string;
+  Outflow: string;
+  Inflow: string;
   '"Account"': string;
   Memo: string;
 };
 
 export type BankRow = {
-  'Transaction Date': string,
-  Description: string,
+  'Transaction Date': string;
+  Description: string;
   Amount?: string;
-  Debit: string,
-  Credit: string,
+  Debit: string;
+  Credit: string;
 };
 
-export const sortByDate = (trans: Transaction[]) => trans.sort((a, b) => dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1);
+export const sortByDate = (trans: Transaction[]) => trans.sort((a, b) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
 
 export function getBankTransactions(parsedCsv: BankRow[]): Transaction[] {
   return parsedCsv.map(({ Description, Debit, Credit, Amount, 'Transaction Date': date }) => ({
@@ -140,33 +139,30 @@ export function getBankTransactions(parsedCsv: BankRow[]): Transaction[] {
     date: dayjs(date),
     payee: Description,
     source: 'Bank',
-    amount: Amount && getNumberFromDollarString(Amount || '') ||
-      Debit && -1 * getNumberFromDollarString(Debit || '') ||
-      getNumberFromDollarString(Credit || '')
+    amount:
+      (Amount && getNumberFromDollarString(Amount || '')) ||
+      (Debit && -1 * getNumberFromDollarString(Debit || '')) ||
+      getNumberFromDollarString(Credit || ''),
   }));
 }
 
 export function getYnabTransactions(parsedCsv: YnabRow[], accountName: string | RegExp): Transaction[] {
   return parsedCsv
-    .filter(
-      (tran) => {
-        const account = _.find(tran, (v, k) => {
-          return k.includes('Account');
-        });
-        if (!account) {
-          throw new Error('NOT ACCOUNT');
-        }
-        return typeof accountName === 'string' ?
-          account.toLowerCase() === accountName.toLowerCase() :
-          accountName.test(account);
+    .filter((tran) => {
+      const account = _.find(tran, (v, k) => {
+        return k.includes('Account');
+      });
+      if (!account) {
+        throw new Error('NOT ACCOUNT');
       }
-    )
+      return typeof accountName === 'string' ? account.toLowerCase() === accountName.toLowerCase() : accountName.test(account);
+    })
     .map(({ Payee, Outflow, Inflow, Date: date, Memo }) => ({
       id: uuid.v4(),
       date: dayjs(date),
       payee: Payee,
       source: 'Ynab' as 'Ynab',
-      amount: Outflow && -1 * getNumberFromDollarString(Outflow) || getNumberFromDollarString(Inflow),
+      amount: (Outflow && -1 * getNumberFromDollarString(Outflow)) || getNumberFromDollarString(Inflow),
       mergeWithPrevious: mergeableSplit(Memo),
     }))
     .reduce<Transaction[]>((trans, tran) => {
@@ -180,12 +176,11 @@ export function getYnabTransactions(parsedCsv: YnabRow[], accountName: string | 
           {
             ...previous,
             amount: new Decimal(previous.amount).add(tran.amount).toNumber(),
-          }
+          },
         ];
       }
       return [...trans, tran];
-    }, [])
-    ;
+    }, []);
 }
 
 function mergeableSplit(memo: string) {

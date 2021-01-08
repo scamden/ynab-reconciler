@@ -18,7 +18,7 @@ module.exports = {
     "es6": true,
     "node": true
   },
-  "ignorePatterns": ["**/*.js", 'dist', '**/dist/*'],
+  "ignorePatterns": ["**/*.js", 'dist', '**/dist/*', 'node_modules', '**/node_modules/*'],
   "extends": [
     "plugin:react/recommended",
     "prettier",
@@ -113,8 +113,8 @@ module.exports = {
       {
         selector: 'default',
         format: ['camelCase', 'UPPER_CASE', 'PascalCase', 'snake_case'],
-        leadingUnderscore: 'allow',
-        trailingUnderscore: 'allow',
+        leadingUnderscore: 'allowSingleOrDouble',
+        trailingUnderscore: 'allowSingleOrDouble',
       },
       {
         selector: 'typeLike',
@@ -372,10 +372,11 @@ module.exports = {
       {
         "rules": {
           "import-spacing": true,
-          "jsx-alignment": true,
+          // disabling these until they are someday implemented
+          // "jsx-alignment": true,
+          // "jsx-no-string-ref": true,
+          // "jsx-self-close": true,
           "jsx-no-lambda": false,
-          "jsx-no-string-ref": true,
-          "jsx-self-close": true,
           "no-promise-as-boolean": true,
           "prefer-conditional-expression": true,
           "typedef": [
